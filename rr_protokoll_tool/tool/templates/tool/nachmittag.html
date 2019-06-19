@@ -1,5 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{{ nachmittag.datum }}
+<h1>Programm vom {{ nachmittag.datum }}</h1>
+<h2>Starter Programm:</h2>
+{{ nachmittag.starter }}
+<a href="edit/starter/">Bearbeiten</a>
+<h2>Kundschafter Programm:</h2>
+{{ nachmittag.kundschafter }}
+<a href="edit/kundschafter/">Bearbeiten</a>
+<h2>Pfadfinder Programm:</h2>
+{{ nachmittag.pfadfinder }}
+<a href="edit/pfadfinder/">Bearbeiten</a>
 {% endblock %}

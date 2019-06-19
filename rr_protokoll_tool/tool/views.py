@@ -1,6 +1,7 @@
 from django.contrib.auth import forms, authenticate, login, logout
 from django.shortcuts import render, redirect
-from .models import Nachmittag
+from .models import Nachmittag, Team
+from logbuch.models import Logbuch
 
 
 # Create your views here.
@@ -21,8 +22,23 @@ def jahresplan(request):
 
 def nachmittag(request, nachmittag):
     nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
-    print(nachmittag_obj)
     return render(request, 'tool/nachmittag.html', {'nachmittag': nachmittag_obj})
+
+
+def edit_starter(request, nachmittag):
+    nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
+    # aufgaben = Team.objects.objects.get(name='Starter')
+    return render(request, 'tool/edit_team.html', {'team': 'Starter'})
+
+
+def edit_kundschafter(request, nachmittag):
+    nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
+    return render(request, 'tool/edit_team.html', {'team': 'Kundschafter'})
+
+
+def edit_pfadfinder(request, nachmittag):
+    nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
+    return render(request, 'tool/edit_team.html', {'team': 'Pfadfinder'})
 
 
 def user_login(request):
