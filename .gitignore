@@ -1,3 +1,4 @@
 venv/*
 rr_protokoll_tool/tool/migrations/*
+rr_protokoll_tool/logbuch/migrations/*
 *.sqlite3
