@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'tool.apps.ToolConfig', # new
+    'logbuch',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
