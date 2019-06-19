@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 from django.db.models import ImageField
 
-from logbuch.models import Aufgabe, Logbuch
+from logbuch.models import Aufgabe, Logbuch, Abzeichen
 
 
 class Kurs(models.Model):
@@ -29,6 +29,7 @@ class Kind(models.Model):
     vorname = models.CharField(max_length=100)
     geburtstag = models.DateField()
     bild = ImageField(upload_to='kinder/', blank=True)
+    erhaltene_abzeichen = models.ManyToManyField(Abzeichen, blank=True)
 
     def __str__(self):
         return self.vorname
@@ -56,4 +57,4 @@ class Nachmittag(models.Model):
     pfadfinder = models.ForeignKey(TeamProgramm, on_delete=models.SET_NULL, null=True, blank=True, related_name='Pfadfinder')
 
     def __str__(self):
-        return self.datum
+        return str(self.datum)

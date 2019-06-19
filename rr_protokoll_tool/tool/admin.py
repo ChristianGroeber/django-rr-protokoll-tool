@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomLeiterCreationForm, CustomLeiterChangeForm
-from .models import Leiter, Kind, Team, Kurs, TeamProgramm
+from .models import Leiter, Kind, Team, Kurs, TeamProgramm, Nachmittag
 
 
 class CustomLeiterAdmin(UserAdmin):
@@ -18,3 +18,4 @@ admin.site.register(Kurs)
 admin.site.register(Team)
 admin.site.register(Kind)
 admin.site.register(TeamProgramm)
+admin.site.register(Nachmittag)
