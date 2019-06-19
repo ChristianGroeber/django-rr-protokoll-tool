@@ -1,0 +1,3 @@
+venv/*
+rr_protokoll_tool/tool/migrations/*
+*.sqlite3
