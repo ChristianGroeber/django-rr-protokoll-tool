@@ -12,12 +12,23 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-grid-min.css' %}">
 </head>
 <body>
-<nav>
-    Navigation
-</nav>
-<main>
-{% block content %}{% endblock %}
-</main>
+<div class="row">
+    <div class="col-sm-2">
+        <nav>
+            <ul class="navbar">
+                <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="nav-link" href="{% url 'home' %}">Startseite</a></li>
+                <li><a class="nav-link" href="{% url 'jahresplan' %}">Jahresplan</a></li>
+                <li><a class="nav-link" href="{% url 'home' %}">Logbuch</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-sm-10">
+        <main>
+        {% block content %}{% endblock %}
+        </main>
+    </div>
+</div>
 <footer>
     Version 1.0
 </footer>

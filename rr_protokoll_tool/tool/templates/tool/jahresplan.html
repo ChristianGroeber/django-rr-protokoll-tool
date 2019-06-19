@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Jahresplan</h1>
+{% for nachmittag in nachmittage %}
+{{ nachmittag }}
+<a href="../nachmittag/{{ nachmittag }}/">Programm anschauen</a>
+{% endfor %}
+{% endblock %}

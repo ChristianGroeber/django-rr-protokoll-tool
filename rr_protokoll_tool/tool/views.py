@@ -1,5 +1,6 @@
 from django.contrib.auth import forms, authenticate, login, logout
 from django.shortcuts import render, redirect
+from .models import Nachmittag
 
 
 # Create your views here.
@@ -9,6 +10,19 @@ def index(request):
     if str(request.user) is 'AnonymousUser':
         return redirect('login')
     return render(request, 'tool/index.html')
+
+
+def jahresplan(request):
+    if str(request.user) is 'AnonymousUser':
+        return redirect('login')
+    nachmittage = Nachmittag.objects.all()
+    return render(request, 'tool/jahresplan.html', {'nachmittage': nachmittage})
+
+
+def nachmittag(request, nachmittag):
+    nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
+    print(nachmittag_obj)
+    return render(request, 'tool/nachmittag.html', {'nachmittag': nachmittag_obj})
 
 
 def user_login(request):
@@ -26,5 +40,5 @@ def user_login(request):
 
 
 def user_logout(request):
-    logout(request.user)
+    logout(request)
     return redirect('login')
