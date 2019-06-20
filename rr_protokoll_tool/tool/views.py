@@ -1,7 +1,7 @@
 from django.contrib.auth import forms, authenticate, login, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
-from .models import Nachmittag, Team, Programmpunkt
+from .models import Nachmittag, Team, Programmpunkt, Leiter
 from logbuch.models import Logbuch
 
 
@@ -35,7 +35,10 @@ def edit_starter(request, nachmittag):
         pass
     print(programmpunkte)
     if str(request.method) == 'GET':
-        return render(request, 'tool/edit_team.html', {'team': 'Starter', 'programmpunkte': programmpunkte})
+        starter_leiter = Team.objects.get(name='Starter').leiter.all()
+        print(starter_leiter)
+        return render(request, 'tool/edit_team.html', {'team': 'Starter', 'programmpunkte': programmpunkte,
+                                                       'team_leiter': starter_leiter})
     save_programmpunkte(request, programmpunkte)
     save_new_programmpunkt(request, nachmittag_obj)
     return redirect('.')
@@ -44,7 +47,14 @@ def edit_starter(request, nachmittag):
 def save_new_programmpunkt(request, nachmittag):
     form = request.POST
     try:
-        nachmittag.starter.programmpunkte.create(von=form.get('von'), bis=form.get('bis'))
+        a = nachmittag.starter.programmpunkte.create(von=form.get('von'),
+                                                     bis=form.get('bis'),
+                                                     name=form.get('name'),
+                                                     beschreibung=form.get('beschreibung'),
+                                                     material=form.get('material'))
+        selected_leiter = form.getlist('verantwortlich')
+        for leiter in selected_leiter:
+            a.verantwortlich.add(Leiter.objects.get(username=leiter))
         print('saved')
     except ValueError:
         print("didn't save")
@@ -58,10 +68,24 @@ def save_programmpunkte(request, programmpunkte):
         form = request.POST
         new_von = form.get('von' + prog_str)
         new_bis = form.get('bis' + prog_str)
+        new_name = form.get('name' + prog_str)
+        new_verantwortlich = form.getlist('verantwortlich' + prog_str)
+        new_beschreibung = form.get('beschreibung' + prog_str)
+        new_material = form.get('material' + prog_str)
         if new_von is not programmpunkt.von:
             programmpunkt.von = new_von
         if new_bis is not programmpunkt.bis:
             programmpunkt.bis = new_bis
+        if new_name is not programmpunkt.name:
+            programmpunkt.name = new_name
+        if new_beschreibung is not programmpunkt.beschreibung:
+            programmpunkt.beschreibung = new_beschreibung
+        if new_material is not programmpunkt.material:
+            programmpunkt.material = new_material
+        leiter_list = []
+        for leiter_str in new_verantwortlich:
+            leiter_list.append(Leiter.objects.get(username=leiter_str))
+        programmpunkt.verantwortlich.set(leiter_list)
         try:
             programmpunkt.save()
         except IntegrityError:

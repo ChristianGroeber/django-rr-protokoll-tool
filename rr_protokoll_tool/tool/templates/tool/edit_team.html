@@ -47,31 +47,55 @@ $(document).ready(function(){
 </style>
 <h1>{{ team }} bearbeiten</h1>
 {% for programmpunkt in programmpunkte %}
-{{ programmpunkt }}
 <button class="accordion">{{ programmpunkt }}</button>
 <div class="panel">
-  <form method="POST">
+  <form method="POST" id="form{{ programmpunkt.id }}">
     {% csrf_token %}
     <label for="von{{ programmpunkt.id }}">Von: </label>
     <input type="time" id="von{{ programmpunkt.id }}" name="von{{ programmpunkt.id }}" value="{{ programmpunkt.von }}"><br>
     <label for="bis{{ programmpunkt.id }}">Bis: </label>
-    <input type="time" id="bis{{ programmpunkt.id }}" name="bis{{ programmpunkt.id }}" value="{{ programmpunkt.bis }}">
-
-    <a href="delete/{{ programmpunkt.id }}">Diesen Programmpunkt entfernen</a>
+    <input type="time" id="bis{{ programmpunkt.id }}" name="bis{{ programmpunkt.id }}" value="{{ programmpunkt.bis }}"><br>
+    <label for="name{{ programmpunkt.id }}">Name:</label>
+    <input type="text" id="name{{ programmpunkt.id }}" name="name{{ programmpunkt.id }}" value="{{ programmpunkt.name }}"><br>
+    <label for="verantwortlich{{ programmpunkt.id }}">Verantwortlich: </label>
+    <select multiple id="verantwortlich{{ programmpunkt.id }}" name="verantwortlich{{ programmpunkt.id }}"><br>
+      {% for leiter in team_leiter %}
+      {% if leiter in programmpunkt.verantwortlich.all %}<option selected value="{{ leiter.username }}">{% else %}
+        <option value="{{ leiter.username }}">{%endif %}{{ leiter.username }}</option>
+      {% endfor %}
+    </select><br>
+        <label for="beschreibung{{ programmpunkt.id }}">Beschreibung: </label><br>
+  <textarea rows="4" id="beschreibung{{ programmpunkt.id }}" cols="50" name="beschreibung{{ programmpunkt.id }}" form="form{{ programmpunkt.id }}">{{ programmpunkt.beschreibung }}</textarea><br>
+  <label for="material{{ programmpunkt.id }}">Material: </label><br>
+  <textarea rows="4" id="material{{ programmpunkt.id }}" cols="50" name="material{{ programmpunkt.id }}" form="form{{ programmpunkt.id }}">{{ programmpunkt.beschreibung }}</textarea><br>
     <button type="submit">Speichern</button>
   </form>
+    <a href="delete/{{ programmpunkt.id }}">Diesen Programmpunkt entfernen</a>
 </div>
 {% endfor %}
 
 <button class="accordion">Neuer Programmpunkt</button>
 <div class="panel">
-  <form method="POST">
+  <form method="POST" id="form">
     {% csrf_token %}
     <label for="von">Von: </label>
-    <input type="time" id="von" name="von" value="">
+    <input type="time" id="von" name="von"><br>
     <label for="bis">Bis: </label>
-    <input type="time" id="bis" name="bis" value="">
-    <br><button type="submit">Speichern</button>
+    <input type="time" id="bis" name="bis"><br>
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br>
+    <label for="verantwortlich">Verantwortlich: </label>
+    <select multiple id="verantwortlich" name="verantwortlich"><br>
+      {% for leiter in team_leiter %}
+      {% if leiter in programmpunkt.verantwortlich.all %}<option selected value="{{ leiter.username }}">{% else %}
+        <option value="{{ leiter.username }}">{%endif %}{{ leiter.username }}</option>
+      {% endfor %}
+    </select><br>
+        <label for="beschreibung">Beschreibung: </label><br>
+  <textarea rows="4" id="beschreibung" cols="50" name="beschreibung" form="form"></textarea><br>
+  <label for="material">Material: </label><br>
+  <textarea rows="4" id="material" cols="50" name="material" form="form"></textarea><br>
+    <button type="submit">Speichern</button>
   </form>
 </div>
 {% endblock %}

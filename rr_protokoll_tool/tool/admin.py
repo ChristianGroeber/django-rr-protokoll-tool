@@ -10,7 +10,7 @@ class CustomLeiterAdmin(UserAdmin):
     add_form = CustomLeiterCreationForm
     form = CustomLeiterChangeForm
     model = Leiter
-    list_display = ['email', 'username',]
+    list_display = ['email', 'username', ]
 
 
 admin.site.register(Leiter, CustomLeiterAdmin)

@@ -21,7 +21,7 @@ class Leiter(AbstractUser):
     dabei_seit = models.DateField(null=True, blank=True)
 
     def __str__(self):
-        return 'Leiter'
+        return self.username
 
 
 class Kind(models.Model):
@@ -51,6 +51,8 @@ class Programmpunkt(models.Model):
     logbuch_aufgabe = models.ManyToManyField(Aufgabe, blank=True)
     von = models.TimeField()
     bis = models.TimeField()
+    verantwortlich = models.ManyToManyField(Leiter, blank=True)
+    material = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
         return str(self.von) + ' - ' + str(self.bis)
