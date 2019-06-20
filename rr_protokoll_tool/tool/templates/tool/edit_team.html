@@ -84,10 +84,19 @@ $(document).ready(function(){
     <input type="time" id="bis" name="bis"><br>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br>
-    <label for="logbuch">Welches Thema/ welche Themen werden behandelt?</label>
-    <select multiple id="logbuch" name="logbuch">
-
-    </select>
+    <label>Welches Thema/ welche Themen werden behandelt?</label>
+    {% for abzeichen in logbuch.abzeichen.all %}
+      <h4>{{ abzeichen }}: </h4>
+      {% for thema in abzeichen.themen.all %}
+        <h5>{{ thema }}</h5>
+        {% for unterthema in thema.unterthemen.all %}
+          <h6>{{ unterthema }}</h6>
+          {% for aufgabe in unterthema.aufgaben.all %}
+            <label><input type="checkbox">{{ aufgabe }}</label>
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}<br>
     <label for="verantwortlich">Verantwortlich: </label>
     <select multiple id="verantwortlich" name="verantwortlich"><br>
       {% for leiter in team_leiter %}
@@ -102,4 +111,12 @@ $(document).ready(function(){
     <button type="submit">Speichern</button>
   </form>
 </div>
+
+  <div class="test">
+    <form class="custom-multiselect">
+      <label>
+        <input type="checkbox" id="test-id">test
+        </label>
+    </form>
+  </div>
 {% endblock %}

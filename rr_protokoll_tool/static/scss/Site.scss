@@ -3,16 +3,52 @@ $link-color: blue;
 $link-color-hover: purple;
 $accent-color: green;
 
+*{
+    -webkit-transition: background-color ease-out 0.1s;
+}
+
 body{
     color: $font-color;
+    font-family: Arial;
+    h1, h2, h3, h4, h5, h6{
+        font-family: product-sans-regular;
+    }
+
+    nav{
+        ul{
+            list-style-type: none;
+        }
+        a{
+            color: $font-color;
+            display: block;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 5px;
+            border-radius: 2px;
+        }
+        a:hover{
+            background-color: lighten(grey, 30);
+        }
+    }
+
+    form{
+        h1, h2, h3, h4, h5, h6{
+            margin: 0 !important;
+        }
+    }
 
     footer{
         .version{
             vertical-align: middle;
             text-align: center;
-            font-size: 8px;
+            font-size: 12px;
             color: grey;
             font-style: italic;
         }
     }
+}
+
+@font-face {
+  font-family: 'product-sans-regular';
+  src: url('/static/fonts/Product-Sans-Regular.ttf');
 }
