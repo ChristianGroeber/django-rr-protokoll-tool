@@ -45,9 +45,19 @@ class Team(models.Model):
         return self.name
 
 
+class Programmpunkt(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    beschreibung = models.CharField(max_length=500, blank=True)
+    logbuch_aufgabe = models.ManyToManyField(Aufgabe, blank=True)
+    von = models.TimeField()
+    bis = models.TimeField()
+
+    def __str__(self):
+        return str(self.von) + ' - ' + str(self.bis)
+
+
 class TeamProgramm(models.Model):
-    team = models.OneToOneField(Team, on_delete=models.CASCADE)
-    logbuch_aufgaben = models.ManyToManyField(Aufgabe, blank=True)
+    programmpunkte = models.ManyToManyField(Programmpunkt, blank=True)
 
 
 class Nachmittag(models.Model):

@@ -10,9 +10,18 @@ urlpatterns = [
     path('nachmittag/<nachmittag>/', include([
         path('', views.nachmittag),
         path('edit/', include([
-            path('starter/', views.edit_starter, name='edit_starter'),
-            path('kundschafter/', views.edit_kundschafter, name='edit_kundschafter'),
-            path('pfadfinder/', views.edit_pfadfinder, name='edit_pfadfinder')
+            path('starter/', include([
+                path('', views.edit_starter, name='edit_starter'),
+                path('delete/<programmpunkt>/', views.delete_starter)
+            ])),
+            path('kundschafter/', include([
+                path('', views.edit_kundschafter, name='edit_kundschafter'),
+                path('delete/<programmpunkt>/', views.delete_kundschafter)
+            ])),
+            path('pfadfinder/', include([
+                path('', views.edit_pfadfinder, name='edit_pfadfinder'),
+                path('delete/<programmpunkt>/', views.delete_pfadfinder)
+            ])),
         ])),
     ]))
 ]

@@ -46,19 +46,32 @@ $(document).ready(function(){
       transition: max-height 0.2s ease-out;
 </style>
 <h1>{{ team }} bearbeiten</h1>
-<button class="accordion">Section 1</button>
+{% for programmpunkt in programmpunkte %}
+{{ programmpunkt }}
+<button class="accordion">{{ programmpunkt }}</button>
 <div class="panel">
-  <p>Lorem ipsum...</p>
-</div>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="von{{ programmpunkt.id }}">Von: </label>
+    <input type="time" id="von{{ programmpunkt.id }}" name="von{{ programmpunkt.id }}" value="{{ programmpunkt.von }}"><br>
+    <label for="bis{{ programmpunkt.id }}">Bis: </label>
+    <input type="time" id="bis{{ programmpunkt.id }}" name="bis{{ programmpunkt.id }}" value="{{ programmpunkt.bis }}">
 
-<button class="accordion">Section 2</button>
-<div class="panel">
-  <p>Lorem ipsum...</p>
-    <p>aölsdfjöasdjkföajdslökfjafjkaöfökadsjfklöadsökfjasödlfjöladsjfökadsklöadsjfklöadskljaslföajslfja</p>
+    <a href="delete/{{ programmpunkt.id }}">Diesen Programmpunkt entfernen</a>
+    <button type="submit">Speichern</button>
+  </form>
 </div>
+{% endfor %}
 
-<button class="accordion">Section 3</button>
+<button class="accordion">Neuer Programmpunkt</button>
 <div class="panel">
-  <p>Lorem ipsum...</p>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="von">Von: </label>
+    <input type="time" id="von" name="von" value="">
+    <label for="bis">Bis: </label>
+    <input type="time" id="bis" name="bis" value="">
+    <br><button type="submit">Speichern</button>
+  </form>
 </div>
 {% endblock %}
