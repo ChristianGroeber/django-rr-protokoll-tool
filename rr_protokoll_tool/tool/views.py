@@ -33,12 +33,13 @@ def edit_starter(request, nachmittag):
         programmpunkte = nachmittag_obj.starter.programmpunkte.all().order_by('von')
     except AttributeError:
         pass
-    print(programmpunkte)
     if str(request.method) == 'GET':
-        starter_leiter = Team.objects.get(name='Starter').leiter.all()
+        team = Team.objects.get(name='Starter')
+        starter_leiter = team.leiter.all()
         print(starter_leiter)
+        logbuch = team.logbuch
         return render(request, 'tool/edit_team.html', {'team': 'Starter', 'programmpunkte': programmpunkte,
-                                                       'team_leiter': starter_leiter})
+                                                       'team_leiter': starter_leiter, 'logbuch': logbuch})
     save_programmpunkte(request, programmpunkte)
     save_new_programmpunkt(request, nachmittag_obj)
     return redirect('.')
@@ -94,12 +95,34 @@ def save_programmpunkte(request, programmpunkte):
 
 def edit_kundschafter(request, nachmittag):
     nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
-    return render(request, 'tool/edit_team.html', {'team': 'Kundschafter'})
+    try:
+        programmpunkte = nachmittag_obj.kundschafter.programmpunkte.all().order_by('von')
+    except AttributeError:
+        pass
+    if str(request.method) == 'GET':
+        kundschafter_leiter = Team.objects.get(name='Kundschafter').leiter.all()
+        print(kundschafter_leiter)
+        return render(request, 'tool/edit_team.html', {'team': 'Kundschafter', 'programmpunkte': programmpunkte,
+                                                       'team_leiter': kundschafter_leiter})
+    save_programmpunkte(request, programmpunkte)
+    save_new_programmpunkt(request, nachmittag_obj)
+    return redirect('.')
 
 
 def edit_pfadfinder(request, nachmittag):
     nachmittag_obj = Nachmittag.objects.get(datum=nachmittag)
-    return render(request, 'tool/edit_team.html', {'team': 'Pfadfinder'})
+    try:
+        programmpunkte = nachmittag_obj.starter.programmpunkte.all().order_by('von')
+    except AttributeError:
+        pass
+    if str(request.method) == 'GET':
+        pfadfinder_leiter = Team.objects.get(name='Pfadfinder').leiter.all()
+        print(pfadfinder_leiter)
+        return render(request, 'tool/edit_team.html', {'team': 'Pfadfinder', 'programmpunkte': programmpunkte,
+                                                       'team_leiter': pfadfinder_leiter})
+    save_programmpunkte(request, programmpunkte)
+    save_new_programmpunkt(request, nachmittag_obj)
+    return redirect('.')
 
 
 def delete_starter(request, nachmittag, programmpunkt):

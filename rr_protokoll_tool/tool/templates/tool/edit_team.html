@@ -84,6 +84,10 @@ $(document).ready(function(){
     <input type="time" id="bis" name="bis"><br>
     <label for="name">Name:</label>
     <input type="text" id="name" name="name"><br>
+    <label for="logbuch">Welches Thema/ welche Themen werden behandelt?</label>
+    <select multiple id="logbuch" name="logbuch">
+
+    </select>
     <label for="verantwortlich">Verantwortlich: </label>
     <select multiple id="verantwortlich" name="verantwortlich"><br>
       {% for leiter in team_leiter %}

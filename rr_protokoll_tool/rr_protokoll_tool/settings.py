@@ -25,7 +25,7 @@ SECRET_KEY = 'g8f^p203d+axz6^5^=uhyuo_u2czow=k8*tj(8tqksayirn@zs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['protokolltool.christian-groeber.ch', '127.0.0.1']
 
 
 # Application definition
