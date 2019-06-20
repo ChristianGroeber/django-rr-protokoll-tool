@@ -1,0 +1,18 @@
+$font-color: black;
+$link-color: blue;
+$link-color-hover: purple;
+$accent-color: green;
+
+body{
+    color: $font-color;
+
+    footer{
+        .version{
+            vertical-align: middle;
+            text-align: center;
+            font-size: 8px;
+            color: grey;
+            font-style: italic;
+        }
+    }
+}
