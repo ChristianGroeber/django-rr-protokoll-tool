@@ -1,8 +1,9 @@
 from django.contrib.auth import forms, authenticate, login, logout
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+
 from .models import Nachmittag, Team, Programmpunkt, Leiter
-from logbuch.models import Logbuch
+from logbuch.models import Logbuch, Aufgabe
 
 
 # Create your views here.
@@ -40,9 +41,37 @@ def edit_starter(request, nachmittag):
         logbuch = team.logbuch
         return render(request, 'tool/edit_team.html', {'team': 'Starter', 'programmpunkte': programmpunkte,
                                                        'team_leiter': starter_leiter, 'logbuch': logbuch})
+    get_selected_aufgaben(request, programmpunkte)
     save_programmpunkte(request, programmpunkte)
-    save_new_programmpunkt(request, nachmittag_obj)
+    new_programmpunkt = save_new_programmpunkt(request, nachmittag_obj)
+    if new_programmpunkt:
+        get_selected_aufgaben_for_new_programmpunkt(request, new_programmpunkt)
     return redirect('.')
+
+
+def get_selected_aufgaben(request, programmpunkte):
+    form = request.POST
+
+    # for old programmpunkte
+    for programmpunkt in programmpunkte:
+        selected_aufgaben = []
+        for aufgabe in Aufgabe.objects.all():
+            if form.get(str(aufgabe.id) + '-' + str(programmpunkt.id)):
+                print(aufgabe.id)
+                selected_aufgaben.append(aufgabe)
+        programmpunkt.logbuch_aufgabe.set(selected_aufgaben)
+
+
+def get_selected_aufgaben_for_new_programmpunkt(request, programmpunkt):
+    form = request.POST
+
+    # for new programmpunkte
+    selected_aufgaben = []
+    for aufgabe in Aufgabe.objects.all():
+        if form.get(str(aufgabe.id)):
+            print(aufgabe.id)
+            selected_aufgaben.append(aufgabe)
+    programmpunkt.logbuch_aufgabe.set(selected_aufgaben)
 
 
 def save_new_programmpunkt(request, nachmittag):
@@ -57,6 +86,7 @@ def save_new_programmpunkt(request, nachmittag):
         for leiter in selected_leiter:
             a.verantwortlich.add(Leiter.objects.get(username=leiter))
         print('saved')
+        return a
     except ValueError:
         print("didn't save")
     except IntegrityError:

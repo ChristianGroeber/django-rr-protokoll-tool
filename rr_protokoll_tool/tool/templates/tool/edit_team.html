@@ -57,6 +57,24 @@ $(document).ready(function(){
     <input type="time" id="bis{{ programmpunkt.id }}" name="bis{{ programmpunkt.id }}" value="{{ programmpunkt.bis }}"><br>
     <label for="name{{ programmpunkt.id }}">Name:</label>
     <input type="text" id="name{{ programmpunkt.id }}" name="name{{ programmpunkt.id }}" value="{{ programmpunkt.name }}"><br>
+    <label>Welches Thema/ welche Themen werden behandelt?</label>
+    {% for abzeichen in logbuch.abzeichen.all %}
+      <h4>{{ abzeichen }}: </h4>
+      {% for thema in abzeichen.themen.all %}
+        <h5>{{ thema }}</h5>
+        {% for unterthema in thema.unterthemen.all %}
+          <h6>{{ unterthema }}</h6>
+          {% for aufgabe in unterthema.aufgaben.all %}
+            <label>{% if aufgabe in programmpunkt.logbuch_aufgabe.all %}
+              <input checked class="{{ aufgabe.id }}" name="{{ aufgabe.id }}-{{ programmpunkt.id }}" type="checkbox">
+              {% else %}
+              <input class="{{ aufgabe.id }}" name="{{ aufgabe.id }}-{{ programmpunkt.id }}" type="checkbox">
+              {% endif %}
+              {{ aufgabe }}</label>
+          {% endfor %}
+        {% endfor %}
+      {% endfor %}
+    {% endfor %}<br>
     <label for="verantwortlich{{ programmpunkt.id }}">Verantwortlich: </label>
     <select multiple id="verantwortlich{{ programmpunkt.id }}" name="verantwortlich{{ programmpunkt.id }}"><br>
       {% for leiter in team_leiter %}
@@ -92,7 +110,7 @@ $(document).ready(function(){
         {% for unterthema in thema.unterthemen.all %}
           <h6>{{ unterthema }}</h6>
           {% for aufgabe in unterthema.aufgaben.all %}
-            <label><input type="checkbox">{{ aufgabe }}</label>
+            <label><input class="{{ aufgabe.id }}" name="{{ aufgabe.id }}" type="checkbox">{{ aufgabe }}</label>
           {% endfor %}
         {% endfor %}
       {% endfor %}
