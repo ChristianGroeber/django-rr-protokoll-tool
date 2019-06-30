@@ -11,16 +11,51 @@
     <link rel="stylesheet" href="{% static 'scss/Site.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/bootstrap-grid-min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="{% static 'js/bootstrap.js' %}">
+    <script>
+        $(document).ready(function(){
+            $('.row').css('min-height', $(window).height() - $('footer').height() - 25 + 'px');
+        })
+    </script>
 </head>
 <body>
+<h1>Protokoll Tool</h1>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <!--<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>-->
+        </ul>
+      </div>
+    </nav>
 <div class="row">
     <div class="col-sm-2">
         <nav>
             <ul class="navbar">
-                <li><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
-                <li><a class="nav-link" href="{% url 'home' %}">Startseite</a></li>
-                <li><a class="nav-link" href="{% url 'jahresplan' %}">Jahresplan</a></li>
-                <li><a class="nav-link" href="{% url 'home' %}">Logbuch</a></li>
+                <li><a class="nav-link" href="{% url 'home' %}"><img src="{% static 'img/web-page-home.png' %}" width="20"><span>Startseite</span></a></li>
+                <li><a class="nav-link" href="{% url 'jahresplan' %}"><img src="{% static 'img/calendar.png' %}" width="20"><span>Jahresplan</span></a></li>
+                <li><a class="nav-link" href="{% url 'home' %}"><img src="{% static 'img/logbook.png' %}" width="20"><span>Logbuch</span></a></li>
+                <li><a class="nav-link" href="{% url 'logout' %}"><img src="{% static 'img/logout.png' %}" width="20"><span>Logout</span></a></li>
             </ul>
         </nav>
     </div>

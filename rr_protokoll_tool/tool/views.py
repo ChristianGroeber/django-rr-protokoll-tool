@@ -18,7 +18,7 @@ def index(request):
 def jahresplan(request):
     if str(request.user) is 'AnonymousUser':
         return redirect('login')
-    nachmittage = Nachmittag.objects.all()
+    nachmittage = Nachmittag.objects.all().order_by('datum')
     return render(request, 'tool/jahresplan.html', {'nachmittage': nachmittage})
 
 
