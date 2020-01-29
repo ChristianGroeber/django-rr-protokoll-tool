@@ -25,7 +25,7 @@ SECRET_KEY = 'g8f^p203d+axz6^5^=uhyuo_u2czow=k8*tj(8tqksayirn@zs'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['protokolltool.christian-groeber.ch', '127.0.0.1']
+ALLOWED_HOSTS = ['protokolltool.christian-groeber.ch', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'de-ch'
+LANGUAGE_CODE = 'de'
 
 TIME_ZONE = 'UTC'
 
